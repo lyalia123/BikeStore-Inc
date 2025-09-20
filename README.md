@@ -1,7 +1,6 @@
 # CineAnalytics-Inc
 CineAnalytics Inc. is a film industry analytics company. We collect and analyze data on films, actors, genres, and ratings from IMDb. Our primary goal is to identify film trends, popular genres, successful actors and directors, and ratings trends over the years.
 
-
 ```mermaid
 erDiagram
     NAME_BASICS {
@@ -26,36 +25,35 @@ erDiagram
     }
 
     TITLE_RATINGS {
-        string tconst PK
+        string tconst PK, FK
         float averageRating
         int numVotes
     }
 
     TITLE_CREW {
-        string tconst PK
+        string tconst PK, FK
         string directors
         string writers
     }
 
     TITLE_PRINCIPALS {
-        string tconst
+        string tconst FK
         int ordering
-        string nconst
+        string nconst FK
         string category
         string job
         string characters
-        PK(tconst, ordering, nconst)
     }
 
     TITLE_EPISODE {
         string tconst PK
-        string parentTconst
+        string parentTconst FK
         int seasonNumber
         int episodeNumber
     }
 
     TITLE_AKAS {
-        string titleId
+        string titleId FK
         int ordering
         string title
         string region
@@ -63,12 +61,11 @@ erDiagram
         string types
         string attributes
         boolean isOriginalTitle
-        PK(titleId, ordering)
     }
 
-    TITLE_BASICS ||--o{ TITLE_RATINGS : "has"
-    TITLE_BASICS ||--o{ TITLE_CREW : "has"
-    TITLE_BASICS ||--o{ TITLE_PRINCIPALS : "has"
+    TITLE_BASICS ||--o{ TITLE_RATINGS : "rated by"
+    TITLE_BASICS ||--o{ TITLE_CREW : "created by"
+    TITLE_BASICS ||--o{ TITLE_PRINCIPALS : "has principals"
     TITLE_BASICS ||--o{ TITLE_EPISODE : "parent of"
-    TITLE_BASICS ||--o{ TITLE_AKAS : "alias"
+    TITLE_BASICS ||--o{ TITLE_AKAS : "has alias"
     TITLE_PRINCIPALS }|..|{ NAME_BASICS : "who"
