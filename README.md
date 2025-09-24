@@ -53,8 +53,6 @@ erDiagram
 
 
     TITLE_BASICS ||--o{ TITLE_RATINGS : "rated by"
-    TITLE_BASICS ||--o{ TITLE_CREW : "created by"
     TITLE_BASICS ||--o{ TITLE_PRINCIPALS : "has principals"
-    TITLE_BASICS ||--o{ TITLE_EPISODE : "parent of"
     TITLE_BASICS ||--o{ TITLE_AKAS : "has alias"
     TITLE_PRINCIPALS }|..|{ NAME_BASICS : "who"
