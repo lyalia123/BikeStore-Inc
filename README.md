@@ -11,7 +11,6 @@ erDiagram
         string primaryProfession
         string knownForTitles
     }
-
     TITLE_BASICS {
         string tconst PK
         string titleType
@@ -23,19 +22,11 @@ erDiagram
         int runtimeMinutes
         string genres
     }
-
     TITLE_RATINGS {
         string tconst PK, FK
         float averageRating
         int numVotes
     }
-
-    TITLE_CREW {
-        string tconst PK, FK
-        string directors
-        string writers
-    }
-
     TITLE_PRINCIPALS {
         string tconst FK
         int ordering
@@ -44,14 +35,6 @@ erDiagram
         string job
         string characters
     }
-
-    TITLE_EPISODE {
-        string tconst PK
-        string parentTconst FK
-        int seasonNumber
-        int episodeNumber
-    }
-
     TITLE_AKAS {
         string titleId FK
         int ordering
@@ -62,6 +45,12 @@ erDiagram
         string attributes
         boolean isOriginalTitle
     }
+
+    TITLE_BASICS ||--o{ TITLE_RATINGS : "rated by"
+    TITLE_BASICS ||--o{ TITLE_PRINCIPALS : "has principals"
+    TITLE_BASICS ||--o{ TITLE_AKAS : "alias"
+    TITLE_PRINCIPALS }|..|{ NAME_BASICS : "who"
+
 
     TITLE_BASICS ||--o{ TITLE_RATINGS : "rated by"
     TITLE_BASICS ||--o{ TITLE_CREW : "created by"
