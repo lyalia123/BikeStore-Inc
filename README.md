@@ -94,3 +94,8 @@ erDiagram
         INT quantity
     }
 ```
+
+## Quick Start
+1. Установите зависимости: `pip install psycopg2-binary pandas`
+2. Запустите создание БД: `python main.py`
+3. Запустите аналитические запросы: `python query_runner.py`
