@@ -1,58 +1,93 @@
-# CineAnalytics-Inc
-CineAnalytics Inc. is a film industry analytics company. We collect and analyze data on films, actors, genres, and ratings from IMDb. Our primary goal is to identify film trends, popular genres, successful actors and directors, and ratings trends over the years.
+# BikeStore Analytics
+
+## Company
+BikeStore Inc. – это сеть магазинов велосипедов, где ведется аналитика продаж, остатков на складах и работы сотрудников.
+
+## Project Overview
+Проект включает создание базы данных `bikestore`, загрузку данных из CSV файлов и выполнение аналитических SQL-запросов для оценки продаж, остатков, заказов и работы персонала.
+
+## ERD (Entity-Relationship Diagram)
 
 ```mermaid
 erDiagram
-    NAME_BASICS {
-        string nconst PK
-        string primaryName
-        int birthYear
-        int deathYear
-        string primaryProfession
-        string knownForTitles
+    BRANDS ||--o{ PRODUCTS : "brand_id"
+    CATEGORIES ||--o{ PRODUCTS : "category_id"
+    PRODUCTS ||--o{ ORDER_ITEMS : "product_id"
+    CUSTOMERS ||--o{ ORDERS : "customer_id"
+    STORES ||--o{ STAFFS : "store_id"
+    STORES ||--o{ ORDERS : "store_id"
+    STAFFS ||--o{ ORDERS : "staff_id"
+    ORDERS ||--o{ ORDER_ITEMS : "order_id"
+    STORES ||--o{ STOCKS : "store_id"
+    PRODUCTS ||--o{ STOCKS : "product_id"
+    
+    BRANDS {
+        SERIAL brand_id PK
+        VARCHAR brand_name
     }
-    TITLE_BASICS {
-        string tconst PK
-        string titleType
-        string primaryTitle
-        string originalTitle
-        boolean isAdult
-        int startYear
-        int endYear
-        int runtimeMinutes
-        string genres
+    CATEGORIES {
+        SERIAL category_id PK
+        VARCHAR category_name
     }
-    TITLE_RATINGS {
-        string tconst PK, FK
-        float averageRating
-        int numVotes
+    PRODUCTS {
+        SERIAL product_id PK
+        VARCHAR product_name
+        INT brand_id FK
+        INT category_id FK
+        INT model_year
+        NUMERIC list_price
     }
-    TITLE_PRINCIPALS {
-        string tconst FK
-        int ordering
-        string nconst FK
-        string category
-        string job
-        string characters
+    CUSTOMERS {
+        SERIAL customer_id PK
+        VARCHAR first_name
+        VARCHAR last_name
+        VARCHAR phone
+        VARCHAR email
+        VARCHAR street
+        VARCHAR city
+        VARCHAR state
+        VARCHAR zip_code
     }
-    TITLE_AKAS {
-        string titleId FK
-        int ordering
-        string title
-        string region
-        string language
-        string types
-        string attributes
-        boolean isOriginalTitle
+    STORES {
+        SERIAL store_id PK
+        VARCHAR store_name
+        VARCHAR phone
+        VARCHAR email
+        VARCHAR street
+        VARCHAR city
+        VARCHAR state
+        VARCHAR zip_code
     }
-
-    TITLE_BASICS ||--o{ TITLE_RATINGS : "rated by"
-    TITLE_BASICS ||--o{ TITLE_PRINCIPALS : "has principals"
-    TITLE_BASICS ||--o{ TITLE_AKAS : "alias"
-    TITLE_PRINCIPALS }|..|{ NAME_BASICS : "who"
-
-
-    TITLE_BASICS ||--o{ TITLE_RATINGS : "rated by"
-    TITLE_BASICS ||--o{ TITLE_PRINCIPALS : "has principals"
-    TITLE_BASICS ||--o{ TITLE_AKAS : "has alias"
-    TITLE_PRINCIPALS }|..|{ NAME_BASICS : "who"
+    STAFFS {
+        SERIAL staff_id PK
+        VARCHAR first_name
+        VARCHAR last_name
+        VARCHAR email
+        VARCHAR phone
+        BOOLEAN active
+        INT store_id FK
+        INT manager_id
+    }
+    ORDERS {
+        SERIAL order_id PK
+        INT customer_id FK
+        INT order_status
+        DATE order_date
+        DATE required_date
+        DATE shipped_date
+        INT store_id FK
+        INT staff_id FK
+    }
+    ORDER_ITEMS {
+        INT order_id FK
+        SERIAL item_id PK
+        INT product_id FK
+        INT quantity
+        NUMERIC list_price
+        NUMERIC discount
+    }
+    STOCKS {
+        INT store_id FK
+        INT product_id FK
+        INT quantity
+    }
