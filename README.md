@@ -1,9 +1,11 @@
 # BikeStore Analytics
 
 ## Company
+
 BikeStore Inc. – это сеть магазинов велосипедов, где ведется аналитика продаж, остатков на складах и работы сотрудников.
 
 ## Project Overview
+
 Проект включает создание базы данных `bikestore`, загрузку данных из CSV файлов и выполнение аналитических SQL-запросов для оценки продаж, остатков, заказов и работы персонала.
 
 ## ERD (Entity-Relationship Diagram)
@@ -20,7 +22,7 @@ erDiagram
     ORDERS ||--o{ ORDER_ITEMS : "order_id"
     STORES ||--o{ STOCKS : "store_id"
     PRODUCTS ||--o{ STOCKS : "product_id"
-    
+
     BRANDS {
         SERIAL brand_id PK
         VARCHAR brand_name
@@ -91,3 +93,4 @@ erDiagram
         INT product_id FK
         INT quantity
     }
+```
