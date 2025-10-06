@@ -1,5 +1,6 @@
 import psycopg2
 import re
+import datetime
 
 class QueryRunner:
     def __init__(self):
@@ -174,6 +175,7 @@ class QueryRunner:
         
         print(f" Запрос #{query_num} не найден!")
         return False
+
     
     def show_menu(self):
         """Показывает меню с запросами"""
@@ -218,4 +220,5 @@ def main():
     runner.show_menu()
 
 if __name__ == "__main__":
+    
     main()
