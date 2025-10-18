@@ -96,6 +96,11 @@ erDiagram
 ```
 
 ## Quick Start
+
 1. Установите зависимости: `pip install psycopg2-binary pandas`
 2. Запустите создание БД: `python main.py`
 3. Запустите аналитические запросы: `python query_runner.py`
+
+# В командной строке выполните:
+SELECT setval(pg_get_serial_sequence('orders', 'order_id'), COALESCE(MAX(order_id), 1)) FROM orders;
+pip install geopy

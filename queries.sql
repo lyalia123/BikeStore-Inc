@@ -70,3 +70,4 @@ FROM stocks st
 JOIN stores s ON st.store_id = s.store_id
 JOIN products p ON st.product_id = p.product_id
 ORDER BY s.store_name, p.product_name;
+

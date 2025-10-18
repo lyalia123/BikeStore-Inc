@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: superset_postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=bikestore
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Alpieva2006
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  superset:
+    image: apache/superset:3.0.1
+    container_name: superset
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - "8088:8088"
+    environment:
+      - SUPERSET_SECRET_KEY=secret-key-123
+      - FLASK_ENV=development
+      - MAPBOX_API_KEY=pk.eyJ1IjoibGFscGlldmEiLCJhIjoiY21ndjJjOXJlMDFreDJvc2dwcHdjYTd0bCJ9.V-RgcEFR_WbYtNY9XMkxNQ
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    command: >
+      sh -c "
+        superset db upgrade &&
+        superset init &&
+        superset fab create-admin --username admin --firstname Admin --lastname User --email admin@admin.com --password admin &&
+        superset run -h 0.0.0.0 -p 8088 --with-threads --reload --debugger
+      "
+    volumes:
+      - superset_data:/app/superset_home
+
+volumes:
+  superset_data:
+  postgres_data:
